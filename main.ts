@@ -1,35 +1,33 @@
 // main.ts — Golden Crust Bakery entrypoint (Node 22, standard library only).
 // Copies game/ and screenshots/ into the output directory and writes
 // /output/dossier.json with buildDossier from vendor/makefun-game.ts.
-// Outside the grader, MAKEFUN_OUTPUT_DIR stands in for /output.
-import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+// Outside the grader, MAKEFUN_OUTPUT_DIR stands in for /output:
+//   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-game.ts';
 
-const repoRoot = resolve(import.meta.dirname ?? '.');
-const outDir = process.env.MAKEFUN_OUTPUT_DIR || '/output';
+const here = fileURLToPath(new URL('.', import.meta.url));
+const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-async function main(): Promise<void> {
-  mkdirSync(outDir, { recursive: true });
+mkdirSync(out, { recursive: true });
+cpSync(join(here, 'game'), join(out, 'game'), { recursive: true });
+mkdirSync(join(out, 'screenshots'), { recursive: true });
+if (existsSync(join(here, 'screenshots'))) cpSync(join(here, 'screenshots'), join(out, 'screenshots'), { recursive: true });
 
-  const gameDir = join(repoRoot, 'game');
-  const shotsDir = join(repoRoot, 'screenshots');
-
-  if (!existsSync(gameDir)) throw new Error('game/ is missing from the repository');
-  if (!existsSync(shotsDir)) throw new Error('screenshots/ is missing from the repository');
-
-  cpSync(gameDir, join(outDir, 'game'), { recursive: true });
-  cpSync(shotsDir, join(outDir, 'screenshots'), { recursive: true });
-
-  // buildDossier writes the dossier from the handed-in game and screenshots.
-  // Awaiting it is safe whether it returns its bytes at once or as a promise.
-  const dossier = await buildDossier(gameDir, shotsDir);
-  const bytes = typeof dossier === 'string' ? Buffer.from(dossier, 'utf8') : dossier;
-  writeFileSync(join(outDir, 'dossier.json'), bytes);
-  console.log(`Wrote ${outDir}/dossier.json (${bytes.length} bytes)`);
-}
-
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// The scorer's own caps (reference/gate.json): only text_max_bytes shapes the bytes; the others refuse an entry the
+// scorer would refuse (more than 4 screenshots or one over 256 KiB; more than 993 files in game/ or 48 MiB of game
+// files, in all, or a path under game/ over 1000 bytes).
+// buildDossier takes the output directory (which now holds game/ and screenshots/) and returns the dossier bytes.
+writeFileSync(
+  join(out, 'dossier.json'),
+  buildDossier(out, {
+    text_max_bytes: 163840,
+    screenshots: { max: 4, max_bytes: 262144 },
+    game_max_files: 993,
+    game_max_bytes: 50331648,
+    game_path_max_bytes: 1000,
+  }),
+);
+console.log(`Wrote ${out}/dossier.json`);
