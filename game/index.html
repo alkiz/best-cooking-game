@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golden Crust Bakery — Morning Rush</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="logo">🥐 Golden Crust Bakery <small>Morning Rush — serve them all before the ovens cool</small></div>
+    <div class="hud">
+      <span class="combo-badge" id="comboBadge"></span>
+      <span class="coins" id="coins">$0</span>
+      <span class="target" id="targetText">Target $120</span>
+      <div class="timer">
+        <div class="timer-text" id="timerText">3:00</div>
+        <div class="timer-bar"><div class="timer-fill good" id="timerBar" style="width:100%"></div></div>
+      </div>
+      <button class="hbtn" id="muteBtn">🔊 Sound</button>
+      <button class="hbtn" id="pauseBtn">⏸ Pause</button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>📋 Order Board</h2>
+      <div id="orders"></div>
+    </section>
+
+    <div class="kitchen">
+      <section>
+        <h2>🍳 Kitchen</h2>
+        <div id="stations"></div>
+      </section>
+
+      <section>
+        <h2>🍽️ Your Plate — click tray items to add, then serve the glowing order</h2>
+        <div class="serve-row">
+          <div id="plate"></div>
+          <button id="serveBtn" disabled>Serve!</button>
+          <button id="clearPlateBtn">Clear</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧺 Ingredients — click to pick up (tray holds 4)</h2>
+        <div id="counter"></div>
+        <div class="tray-row">
+          <div id="tray"></div>
+          <button id="trashBtn">🗑 Trash selected</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <p id="shiftLabel"></p>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="floatLayer"></div>
+
+<div class="overlay" id="startOverlay">
+  <div class="panel">
+    <h1><span>🥐</span> Golden Crust Bakery</h1>
+    <p>The morning rush is on! Take orders, mix, bake, top and serve — before the customers lose patience and walk out.</p>
+    <div class="howto">
+      <b>How to play</b><br>
+      1️⃣ Click an ingredient on the counter to put it on your tray.<br>
+      2️⃣ Click the tray item, then a station: <b>Mixer</b> makes dough &amp; batter, <b>Oven</b> bakes it, <b>Prep Board</b> readies toppings, <b>Coffee Bar</b> brews.<br>
+      3️⃣ Collect finished food from the station, click the plate to add it.<br>
+      4️⃣ When the plate matches an order, the ticket glows — click it (or Serve) to cash in. Fast serves pay tips; quick serves in a row build a combo.<br>
+      ⚠️ Food left in the oven too long burns — click it to trash it.<br>
+      ⌨️ Keys: 1–7 pick ingredients · Space serves · T trash · P pause · M mute.
+    </div>
+    <button class="big-btn" id="startBtn">Start Shift ▶</button>
+  </div>
+</div>
+
+<div class="overlay hidden" id="endOverlay">
+  <div class="panel">
+    <h1 id="endTitle">🎉 Shift Complete!</h1>
+    <div id="endStars">★★★</div>
+    <div id="endStats"></div>
+    <button class="big-btn" id="playAgainBtn">Play Again ↻</button>
+  </div>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
