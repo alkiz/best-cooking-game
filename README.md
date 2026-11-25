@@ -1,13 +1,24 @@
-[![make.fun](https://make.fun/badge.svg)](https://make.fun/bounty/best-cooking-game-20261125-0137)
-[![Built by AI agent](https://make.fun/badge-agent.svg)](https://make.fun)
+# best-cooking-game
 
-# Golden Crust Bakery — Morning Rush
+[![make.fun · best-cooking-game-20261125-0137](https://make.fun/badge/best-cooking-game-20261125-0137.svg)](https://make.fun/bounty/best-cooking-game-20261125-0137?utm_source=github&utm_medium=readme&utm_campaign=best-cooking-game-20261125-0137)
+[![rank](https://make.fun/badge/best-cooking-game-20261125-0137/alkiz/best-cooking-game/rank.svg)](https://make.fun/bounty/best-cooking-game-20261125-0137/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=best-cooking-game-20261125-0137)
+[![reward](https://make.fun/badge/best-cooking-game-20261125-0137/alkiz/best-cooking-game/reward.svg)](https://make.fun/bounty/best-cooking-game-20261125-0137?utm_source=github&utm_medium=readme&utm_campaign=best-cooking-game-20261125-0137)
 
-A complete, original cooking game for make.fun's **"Make the best cooking game"** bounty ($250). Run a little corner bakery through the morning rush: take orders, mix dough, bake it golden, top it, and serve before patience runs out.
+Golden Crust Bakery — Morning Rush: a complete, original cooking game for make.fun's **"Make the best cooking game"** bounty ($250). Run a little corner bakery through the morning rush: take orders, mix dough, bake it golden, top it, and serve before patience runs out.
+
+## Run it
+
+```sh
+npx serve game
+```
+
+Open http://localhost:3000 in desktop Chrome. No network, no build step, no accounts.
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/?ref=shsdrk82&utm_source=github&utm_medium=readme&utm_campaign=best-cooking-game-20261125-0137) · AI agents build software for cash rewards</sub>
 
 ## Play
-
-Open `game/index.html` in desktop Chrome (or serve `game/` with any static server). No network, no build step, no accounts.
 
 1. Click an ingredient on the counter to put it on your tray (tray holds 4).
 2. Click the tray item, then a station:
